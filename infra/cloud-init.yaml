@@ -6,7 +6,7 @@
 # sudo systemctl restart apache
 
 # how to copy files off server
-# scp dave@hoverflytest39.westeurope.cloudapp.azure.com:/home/dave/php.ini .
+# scp robfarnell@hoverflytest39.australiaeast.cloudapp.azure.com:/home/robfarnell/php.ini .
 
 # https://www.journaldev.com/24954/install-wordpress-on-ubuntu  (suggests Maria)
 # https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-ubuntu-18-04
@@ -17,13 +17,13 @@ runcmd:
   - sudo apt install apache2 -y
 
   # get helper files from repo
-  - cd /home/dave
-  - sudo git clone https://github.com/djhmateer/hoverfly-website.git source
+  - cd /home/robfarnell
+  - sudo git clone https://github.com/jobbio/hoverfly-website.git source
 
   # AllowOverride in web root for url rewriting
-  - sudo cp /home/dave/source/infra/000-default.conf /etc/apache2/sites-available
+  - sudo cp /home/robfarnell/source/infra/000-default.conf /etc/apache2/sites-available
   # cloudflare connects on SSL (even though we're using the default self signed ssl)
-  - sudo cp /home/dave/source/infra/default-ssl.conf /etc/apache2/sites-available
+  - sudo cp /home/robfarnell/source/infra/default-ssl.conf /etc/apache2/sites-available
 
   - sudo a2enmod rewrite
   - sudo a2enmod ssl
@@ -63,11 +63,11 @@ runcmd:
   # - cd /etc/php/7.2/apache2
   - cd /etc/php/7.4/apache2
   - sudo cp php.ini phpoldini.txt
-  - sudo cp /home/dave/source/infra/php74.ini /etc/php/7.4/apache2/php.ini
+  - sudo cp /home/robfarnell/source/infra/php74.ini /etc/php/7.4/apache2/php.ini
 
   # delete the apache default index.html
   - sudo rm /var/www/html/index.html
-  - sudo cp /home/dave/source/infra/info.php /var/www/html/
+  - sudo cp /home/robfarnell/source/infra/info.php /var/www/html/
 
   # checks for syntax errors in apache conf
   - sudo apache2ctl configtest
@@ -89,9 +89,9 @@ runcmd:
   - sudo chmod -R 755 /var/www/html/wp-content
 
   # I need the domain name eg http://hoverflytest427.westeurope.cloudapp.azure.com/
-  # - sudo chmod 777 /home/dave/source/infra/wpcoreinstall.sh
-  # - sudo -u www-data /home/dave/source/infra/wpcoreinstall.sh
-  - sudo -u www-data wp core install --url='https://hoverflylagoons.co.uk' --title='Blog Title' --admin_user='dave' --admin_password='letmein' --admin_email='email@domain.com'
+  # - sudo chmod 777 /home/robfarnell/source/infra/wpcoreinstall.sh
+  # - sudo -u www-data /home/robfarnell/source/infra/wpcoreinstall.sh
+  - sudo -u www-data wp core install --url='https://wp.farnell.xyz' --title='Blog Title' --admin_user='robfarnell' --admin_password='letmein' --admin_email='email@domain.com'
 
   # plugins
   - sudo -u www-data wp plugin install all-in-one-wp-migration --activate  
@@ -119,7 +119,7 @@ final_message: "The system is finally up, after $UPTIME seconds"
   # - sudo apt install bashtop -y
 
 # make a quick test page to signify that the server is ready to go
-  # - cd /var/www/cookie-dave-web
+  # - cd /var/www/cookie-robfarnell-web
   # - echo "Healthy" > healthcheck.html
 
 # OS updates need a reboot 
